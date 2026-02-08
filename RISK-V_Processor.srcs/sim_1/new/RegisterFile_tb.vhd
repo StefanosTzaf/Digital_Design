@@ -44,36 +44,37 @@ architecture Behavioral of RegisterFile_tb is
     component RegisterFile is
     
         Port (
-            Clk: in STD_LOGIC;
-            RegWrite: in STD_LOGIC;
-            ADDR_W: in STD_LOGIC_VECTOR (N_tb-1 downto 0);
-            ADDR_R1: in STD_LOGIC_VECTOR (N_tb-1 downto 0);
-            ADDR_R2: in STD_LOGIC_VECTOR (N_tb-1 downto 0);
-            DATA_IN: in STD_LOGIC_VECTOR (M_tb-1 downto 0);
-            DATA_OUT1: out STD_LOGIC_VECTOR (M_tb-1 downto 0);
-            DATA_OUT2: out STD_LOGIC_VECTOR (M_tb-1 downto 0)
+            Clk       : in STD_LOGIC;
+            RegWrite  : in STD_LOGIC;
+            ADDR_W    : in STD_LOGIC_VECTOR (N_tb-1 downto 0);
+            ADDR_R1   : in STD_LOGIC_VECTOR (N_tb-1 downto 0);
+            ADDR_R2   : in STD_LOGIC_VECTOR (N_tb-1 downto 0);
+            DATA_IN   : in STD_LOGIC_VECTOR (M_tb-1 downto 0);
+            DATA_OUT1 : out STD_LOGIC_VECTOR (M_tb-1 downto 0);
+            DATA_OUT2 : out STD_LOGIC_VECTOR (M_tb-1 downto 0)
          );
     end component;
     
-    signal Clk_tb, RegWrite_tb : std_logic := '0';
-    signal ADDR_W_tb, ADDR_R1_tb,ADDR_R2_tb : std_logic_vector(3 downto 0) := (others => '0');
-    signal DATA_IN_tb : std_logic_vector(31 downto 0) := (others => '0');
-    signal DATA_OUT1_tb, DATA_OUT2_tb : std_logic_vector(31 downto 0);
+    signal Clk_tb, RegWrite_tb              : std_logic := '0';
+    signal ADDR_W_tb, ADDR_R1_tb,ADDR_R2_tb : std_logic_vector(N_tb-1 downto 0) := (others => '0');
+    signal DATA_IN_tb                       : std_logic_vector(M_tb-1 downto 0) := (others => '0');
+    signal DATA_OUT1_tb, DATA_OUT2_tb       : std_logic_vector(M_tb-1 downto 0);
     
 begin
 
-    UUT: RegisterFile
-    port map (
-                  Clk        => Clk_tb,
-                  RegWrite   => RegWrite_tb,
-                  ADDR_W     => ADDR_W_tb,
-                  ADDR_R1    => ADDR_R1_tb,
-                  ADDR_R2    => ADDR_R2_tb,
-                  DATA_IN    => DATA_IN_tb,
-                  DATA_OUT1  => DATA_OUT1_tb,
-                  DATA_OUT2  => DATA_OUT2_tb
-    );
-    
+    UUT: RegisterFile 
+        port map ( 
+            Clk       => Clk_tb,
+            RegWrite  => RegWrite_tb,
+            ADDR_W    => ADDR_W_tb,
+            ADDR_R1   => ADDR_R1_tb,
+            ADDR_R2   => ADDR_R2_tb,
+            DATA_IN   => DATA_IN_tb,
+            DATA_OUT1 => DATA_OUT1_tb,
+            DATA_OUT2 => DATA_OUT2_tb
+         );
+         
+         
     clk_process: process
     begin
         Clk_tb <= '0';
@@ -81,6 +82,7 @@ begin
         Clk_tb <= '1';
         wait for CLK_PERIOD/2;
     end process;
+    
     
     test: process
     begin
@@ -112,6 +114,7 @@ begin
         RegWrite_tb <= '1';
         wait for CLK_PERIOD;
         
+        -- now it musst be able to read value 5
         ADDR_R2_tb <= "0010";
         wait for CLK_PERIOD;        
         wait;

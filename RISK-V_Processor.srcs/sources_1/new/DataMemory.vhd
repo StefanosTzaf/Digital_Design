@@ -37,16 +37,16 @@ entity DataMemory is
         M : positive := 32
     );
     port (
-        Clk      : in  std_logic;
-        MemWrite : in  std_logic;
-        Addr     : in  std_logic_vector(N-1 downto 0);
-        WriteData: in  std_logic_vector(M-1 downto 0);
-        ReadData : out std_logic_vector(M-1 downto 0)
+        Clk       : in  STD_LOGIC;
+        MemWrite  : in  STD_LOGIC;
+        Addr      : in  STD_LOGIC_VECTOR(N-1 downto 0);
+        WriteData : in  STD_LOGIC_VECTOR(M-1 downto 0);
+        ReadData  : out STD_LOGIC_VECTOR(M-1 downto 0)
     );
 end DataMemory;
 
 architecture Behavioral of DataMemory is
-    type RAM_type is array (0 to (2**N)-1) of std_logic_vector(M-1 downto 0);
+    type RAM_type is array (0 to (2**N)-1) of STD_LOGIC_VECTOR(M-1 downto 0);
     signal RAM : RAM_type := (others => (others => '0'));
 begin
 
@@ -55,7 +55,6 @@ begin
     begin
         if rising_edge(Clk) then
             if MemWrite = '1' then
-                -- we use N=2:2 
                 RAM(to_integer(unsigned(Addr))) <= WriteData;
             end if;
         end if;

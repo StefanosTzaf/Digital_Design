@@ -44,7 +44,7 @@ begin
     process(instr, ImmSrc)
     begin
         case ImmSrc is
-            -- type - ?
+            -- type I
             when "00" =>
                 ExtImm <= (31 downto 12 => instr(31)) & instr(31 downto 20);
             

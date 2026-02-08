@@ -36,26 +36,27 @@ entity RegisterFile is
         N : positive := 4;
         M : positive := 32);
     port (
-        Clk: in STD_LOGIC;
-        RegWrite: in STD_LOGIC;
-        ADDR_W: in STD_LOGIC_VECTOR (N-1 downto 0);
-        ADDR_R1: in STD_LOGIC_VECTOR (N-1 downto 0);
-        ADDR_R2: in STD_LOGIC_VECTOR (N-1 downto 0);
-        DATA_IN: in STD_LOGIC_VECTOR (M-1 downto 0);
-        DATA_OUT1: out STD_LOGIC_VECTOR (M-1 downto 0);
-        DATA_OUT2: out STD_LOGIC_VECTOR (M-1 downto 0));
+        Clk       : in STD_LOGIC;
+        RegWrite  : in STD_LOGIC;
+        ADDR_W    : in STD_LOGIC_VECTOR (N-1 downto 0);
+        ADDR_R1   : in STD_LOGIC_VECTOR (N-1 downto 0);
+        ADDR_R2   : in STD_LOGIC_VECTOR (N-1 downto 0);
+        DATA_IN   : in STD_LOGIC_VECTOR (M-1 downto 0);
+        DATA_OUT1 : out STD_LOGIC_VECTOR (M-1 downto 0);
+        DATA_OUT2 : out STD_LOGIC_VECTOR (M-1 downto 0));
 end RegisterFile;
 
 
 architecture Behavioral of RegisterFile is
-    type RF_array is array (2**N-1 downto 0) of STD_LOGIC_VECTOR (M-1 downto 0);
+    type RF_array is array (0 to 2**N-1) of STD_LOGIC_VECTOR (M-1 downto 0);
     signal RF : RF_array := (others => (others => '0')); 
 begin
 
     REG_FILE: process (Clk)
     begin
         if rising_edge(Clk) then
-            if (RegWrite = '1') then -- do not write in reg 0
+            if (RegWrite = '1') then 
+                -- do not write in reg 0
                 if (to_integer(unsigned(ADDR_W)) /= 0) then
                     RF(to_integer(unsigned(ADDR_W))) <= DATA_IN;
                 end if;

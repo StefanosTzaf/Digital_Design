@@ -36,10 +36,10 @@ entity Program_counter is
         N : positive := 32
     );
     port (
-        Clk      : in  std_logic;
-        Reset    : in  std_logic;
-        PC_In    : in  std_logic_vector(N-1 downto 0);
-        PC_Out   : out std_logic_vector(N-1 downto 0)
+        Clk      : in  STD_LOGIC;
+        Reset    : in  STD_LOGIC;
+        PC_In    : in  STD_LOGIC_VECTOR(N-1 downto 0);
+        PC_Out   : out STD_LOGIC_VECTOR(N-1 downto 0)
     );
 end Program_counter;
 
@@ -50,7 +50,7 @@ begin
     begin
         if Reset = '1' then
             PC_Out <= (others => '0');
-        elsif rising_edge(CLK) then
+        elsif rising_edge(Clk) then
             PC_Out <= PC_In;
         end if;
     end process PC_update;

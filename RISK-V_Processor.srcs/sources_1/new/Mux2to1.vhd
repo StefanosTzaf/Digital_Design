@@ -36,10 +36,10 @@ entity Mux2to1 is
         N : positive := 32
     );
     port (
-        In0    : in  std_logic_vector(N-1 downto 0);
-        In1    : in  std_logic_vector(N-1 downto 0);
-        Sel    : in  std_logic;
-        MuxOut : out std_logic_vector(N-1 downto 0)
+        In0    : in  STD_LOGIC_VECTOR(N-1 downto 0);
+        In1    : in  STD_LOGIC_VECTOR(N-1 downto 0);
+        Sel    : in  STD_LOGIC;
+        MuxOut : out STD_LOGIC_VECTOR(N-1 downto 0)
     );
 end Mux2to1;
 

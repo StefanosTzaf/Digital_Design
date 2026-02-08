@@ -33,11 +33,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity ALUDec is
     Port (
-        funct3      : in std_logic_vector(2 downto 0);
-        Funct7      : in std_logic;
-        rop        : in std_logic_vector(2 downto 0);
-        ALUControl : out std_logic_vector(2 downto 0);
-        SLTUorSLT  : out std_logic
+        funct3     : in STD_LOGIC_VECTOR(2 downto 0);
+        Funct7     : in STD_LOGIC;
+        rop        : in STD_LOGIC_VECTOR(2 downto 0);
+        ALUControl : out STD_LOGIC_VECTOR(2 downto 0);
+        SLTUorSLT  : out STD_LOGIC
      );
 end ALUDec;
 
@@ -46,22 +46,21 @@ architecture Behavioral of ALUDec is
 begin
 
     Process(funct3, Funct7, rop)
-        variable funct3_v : std_logic_vector(2 downto 0);
-        variable Funct7_v : std_logic;
-        variable rop_v : std_logic_vector(2 downto 0);
-        variable ALUControl_v : std_logic_vector(2 downto 0);
-        variable SLTUorSLT_v : std_logic;
+        variable funct3_v     : STD_LOGIC_VECTOR(2 downto 0);
+        variable Funct7_v     : STD_LOGIC;
+        variable rop_v        : STD_LOGIC_VECTOR(2 downto 0);
+        variable ALUControl_v : STD_LOGIC_VECTOR(2 downto 0);
+        variable SLTUorSLT_v  : STD_LOGIC;
     begin
-        funct3_v := funct3;
-        Funct7_v := Funct7;
-        rop_v := rop;
+        funct3_v     := funct3;
+        Funct7_v     := Funct7;
+        rop_v        := rop;
         ALUControl_v := "111"; -- default to an invalid control signal
-        SLTUorSLT_v := '0';
+        SLTUorSLT_v  := '0';
         
         case rop is
             when "000" => --LW
-                ALUControl_v := "010";
-                SLTUorSLT_v := '1'; 
+                ALUControl_v := "000";
             when "001" => --SW
                 ALUControl_v := "000";
             when "010" => --R-type
@@ -87,9 +86,7 @@ begin
                     when "000" =>
                         ALUControl_v := "000"; -- ADDI
                     when "100" =>
-                        if SLTUorSLT_v = '0' then
-                            ALUControl_v := "011"; -- XORI
-                        end if;
+                        ALUControl_v := "110"; -- XORI
                     when "110" =>
                         ALUControl_v := "101"; -- ORI
                     when "111" =>
@@ -102,7 +99,7 @@ begin
         end case;
 
         ALUControl <= ALUControl_v;
-        SLTUorSLT <= SLTUorSLT_v;
+        SLTUorSLT  <= SLTUorSLT_v;
     end Process;
 
                         

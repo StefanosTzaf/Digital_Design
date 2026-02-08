@@ -33,10 +33,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity PCLogic is
     Port ( 
-        funct3 : in std_logic_vector(2 downto 0);
-        rop    : in std_logic_vector(2 downto 0);
-        NZVC   : in std_logic_vector(3 downto 0);
-        PCSrc  : out std_logic
+        funct3 : in STD_LOGIC_VECTOR(2 downto 0);
+        rop    : in STD_LOGIC_VECTOR(2 downto 0);
+        NZVC   : in STD_LOGIC_VECTOR(3 downto 0);
+        PCSrc  : out STD_LOGIC
     );
 end PCLogic;
 
@@ -45,15 +45,15 @@ architecture Behavioral of PCLogic is
 begin
 
     Process(rop, funct3, NZVC)
-        variable funct3_v: std_logic_vector(2 downto 0);
-        variable rop_v: std_logic_vector(2 downto 0);
-        variable NZVC_v: std_logic_vector(3 downto 0);
-        variable PCSrc_v: std_logic;
+        variable funct3_v : STD_LOGIC_VECTOR(2 downto 0);
+        variable rop_v    : STD_LOGIC_VECTOR(2 downto 0);
+        variable NZVC_v   : STD_LOGIC_VECTOR(3 downto 0);
+        variable PCSrc_v  : STD_LOGIC;
     begin
         funct3_v := funct3;
-        rop_v := rop;
-        NZVC_v := NZVC;
-        PCSrc_v := '0'; -- default value
+        rop_v    := rop;
+        NZVC_v   := NZVC;
+        PCSrc_v  := '0'; -- default value
 
         case rop_v is
             when "000" | "001" | "010" | "011" =>

@@ -36,17 +36,17 @@ entity ControlUnit is
         opcode : in std_logic_vector(4 downto 0);
         funct3 : in std_logic_vector(2 downto 0);
         funct7 : in std_logic;
-        NZVC : in std_logic_vector(3 downto 0);
+        NZVC   : in std_logic_vector(3 downto 0);
 
 
-        ResultSrc : out std_logic;
-        MemWrite : out std_logic;
-        ALUSrc : out std_logic;
-        ImmSrc : out std_logic_vector(1 downto 0);
-        RegWrite : out std_logic;
-        SLTUorSLT : out std_logic;
+        ResultSrc  : out std_logic;
+        MemWrite   : out std_logic;
+        ALUSrc     : out std_logic;
+        ImmSrc     : out std_logic_vector(1 downto 0);
+        RegWrite   : out std_logic;
+        SLTUorSLT  : out std_logic;
         ALUControl : out std_logic_vector(2 downto 0);
-        PCSrc : out std_logic
+        PCSrc      : out std_logic
      );
 end ControlUnit;
 
@@ -68,31 +68,54 @@ architecture Structural of ControlUnit is
 
     component ALUDec is
     Port (
-        funct3      : in std_logic_vector(2 downto 0);
-        Funct7      : in std_logic;
-        rop        : in std_logic_vector(2 downto 0);
-        ALUControl : out std_logic_vector(2 downto 0);
-        SLTUorSLT  : out std_logic
+        funct3     : in STD_LOGIC_VECTOR(2 downto 0);
+        Funct7     : in STD_LOGIC;
+        rop        : in STD_LOGIC_VECTOR(2 downto 0);
+        ALUControl : out STD_LOGIC_VECTOR(2 downto 0);
+        SLTUorSLT  : out STD_LOGIC
      );
      end component;
 
     component PCLogic is
     Port ( 
-        funct3 : in std_logic_vector(2 downto 0);
-        rop    : in std_logic_vector(2 downto 0);
-        NZVC   : in std_logic_vector(3 downto 0);
-        PCSrc  : out std_logic
+        funct3 : in STD_LOGIC_VECTOR(2 downto 0);
+        rop    : in STD_LOGIC_VECTOR(2 downto 0);
+        NZVC   : in STD_LOGIC_VECTOR(3 downto 0);
+        PCSrc  : out STD_LOGIC
     );
     end component;
 
-     signal ALUControl_internal : std_logic_vector(2 downto 0);
+     signal ALUControl_internal : STD_LOGIC_VECTOR(2 downto 0);
 
 begin
-    InstrDec_component : InstrDec port map(Opcode => opcode, ResultSrc => ResultSrc, MemWrite => MemWrite, ALUSrc => ALUSrc, ImmSrc => ImmSrc, RegWrite => RegWrite, rop => ALUControl_internal);
-    ALUDec_component : ALUDec port map(funct3 => funct3, Funct7 => funct7, rop => ALUControl_internal, ALUControl => ALUControl, SLTUorSLT => SLTUorSLT);
-    PCLogic_component : PCLogic port map(funct3 => funct3, rop => ALUControl_internal, NZVC => NZVC, PCSrc => PCSrc);
+
+    InstrDec_component : InstrDec
+        port map(
+            Opcode => opcode,
+            ResultSrc => ResultSrc,
+            MemWrite => MemWrite,
+            ALUSrc => ALUSrc,
+            ImmSrc => ImmSrc,
+            RegWrite => RegWrite,
+            rop => ALUControl_internal
+         );
+         
+    ALUDec_component : ALUDec 
+        port map(
+            funct3 => funct3,
+            Funct7 => funct7,
+            rop => ALUControl_internal,
+            ALUControl => ALUControl,
+            SLTUorSLT => SLTUorSLT
+        );
+        
+    PCLogic_component : PCLogic
+        port map(
+            funct3 => funct3,
+            rop => ALUControl_internal, 
+            NZVC => NZVC,
+            PCSrc => PCSrc
+        );
 
     
-
 end Structural;
-

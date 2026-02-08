@@ -59,6 +59,7 @@ begin
         variable ImmSrc_v    : STD_LOGIC_VECTOR(1 downto 0);
         variable RegWrite_v  : STD_LOGIC;
         variable rop_v       : STD_LOGIC_VECTOR(2 downto 0);
+        variable opcode_v    : STD_LOGIC_VECTOR(4 downto 0);
     begin
 
         -- initial values to avoid latches
@@ -68,8 +69,9 @@ begin
         ImmSrc_v    := "00";
         RegWrite_v  := '0';
         rop_v       := "111"; -- no op 
+        opcode_v    := Opcode;
 
-        case Opcode is
+        case opcode_v is
             -- LW
             when "00000" => 
                 ResultSrc_v := '1';
@@ -79,33 +81,33 @@ begin
                 RegWrite_v  := '1';
                 rop_v       := "000";
 
-            -- 1. R-Type Instructions (ADD, SUB, XOR, OR)
+            --  R-Type
             when "01100" => 
                 ResultSrc_v := '0';
                 MemWrite_v  := '0';
                 ALUSrc_v    := '0';
                 ImmSrc_v    := "00"; -- Don't Care
                 RegWrite_v  := '1';
-                rop_v       := "011";
+                rop_v       := "010";
 
-            -- 2. I-Type ALU Instructions (ADDI, ANDI, ORI, XORI)
+            -- I-Type
             when "00100" => 
                 ResultSrc_v := '0';
                 MemWrite_v  := '0';
                 ALUSrc_v    := '1';
                 ImmSrc_v    := "00";
                 RegWrite_v  := '1';
-                rop_v       := "001";
+                rop_v       := "011";
 
 
-            -- 4. Store Word (SW)
+            -- SW
             when "01000" => 
                 ResultSrc_v := '0'; -- Don't Care
                 MemWrite_v  := '1';
                 ALUSrc_v    := '1';
                 ImmSrc_v    := "01";
                 RegWrite_v  := '0';
-                rop_v       := "010";
+                rop_v       := "001";
 
             when others =>
                 ResultSrc_v := '0';
