@@ -75,38 +75,27 @@ begin
             -- LW
             when "00000" => 
                 ResultSrc_v := '1';
-                MemWrite_v  := '0';
                 ALUSrc_v    := '1';
-                ImmSrc_v    := "00";
                 RegWrite_v  := '1';
                 rop_v       := "000";
 
             --  R-Type
             when "01100" => 
-                ResultSrc_v := '0';
-                MemWrite_v  := '0';
-                ALUSrc_v    := '0';
-                ImmSrc_v    := "00"; -- Don't Care
                 RegWrite_v  := '1';
                 rop_v       := "010";
 
             -- I-Type
             when "00100" => 
-                ResultSrc_v := '0';
-                MemWrite_v  := '0';
                 ALUSrc_v    := '1';
-                ImmSrc_v    := "00";
                 RegWrite_v  := '1';
                 rop_v       := "011";
 
 
             -- SW
             when "01000" => 
-                ResultSrc_v := '0'; -- Don't Care
                 MemWrite_v  := '1';
                 ALUSrc_v    := '1';
                 ImmSrc_v    := "01";
-                RegWrite_v  := '0';
                 rop_v       := "001";
 
             when others =>

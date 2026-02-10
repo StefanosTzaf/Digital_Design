@@ -68,7 +68,7 @@ begin
                     when "000" =>
                         if Funct7_v = '0' then
                             ALUControl_v := "000"; -- ADD
-                        elsif Funct7_v = '1' then
+                        else
                             ALUControl_v := "001"; -- SUB
                         end if;
                     when "100" =>
