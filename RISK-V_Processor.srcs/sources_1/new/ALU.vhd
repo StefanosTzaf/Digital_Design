@@ -41,7 +41,6 @@ entity ALU is
         SrcA            : in STD_LOGIC_VECTOR (N-1 downto 0);
         SrcB            : in STD_LOGIC_VECTOR (N-1 downto 0);
         ALUControl      : in STD_LOGIC_VECTOR (2 downto 0);
-        SLTUorSLT       : in STD_LOGIC;
 
         N_flag          : out STD_LOGIC;
         Z_flag          : out STD_LOGIC;
@@ -55,13 +54,12 @@ end ALU;
 architecture Behavioral of ALU is
 begin
 -- Follow Esa Protocol, everything with variables inside a single process
-P_ALU_COMB: process(SrcA, SrcB, ALUControl, SLTUorSLT)
+P_ALU_COMB: process(SrcA, SrcB, ALUControl)
         variable v_res          : signed(N-1 downto 0);
         variable v_srcA         : signed(N-1 downto 0);
         variable v_srcB         : signed(N-1 downto 0);
         variable v_flags        : STD_LOGIC_VECTOR(3 downto 0);
         variable v_alu_control  : STD_LOGIC_VECTOR(2 downto 0);
-        variable v_sltu_or_slt  : std_logic;
         variable v_ext_res      : unsigned(N downto 0);
         -- for NOR gate z flag
         variable v_or_reduction : STD_LOGIC;
@@ -71,7 +69,6 @@ P_ALU_COMB: process(SrcA, SrcB, ALUControl, SLTUorSLT)
         v_srcA        := signed(SrcA);
         v_srcB        := signed(SrcB);
         v_alu_control := ALUControl;
-        v_sltu_or_slt := SLTUorSLT;
         v_res         := (others => '0');
         v_ext_res     := (others => '0');
         v_flags    := "0000";

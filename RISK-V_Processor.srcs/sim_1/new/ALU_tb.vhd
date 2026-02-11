@@ -43,7 +43,6 @@ architecture Behavioral of ALU_tb is
             SrcA        : in STD_LOGIC_VECTOR (N_tb-1 downto 0);
             SrcB        : in STD_LOGIC_VECTOR (N_tb-1 downto 0);
             ALUControl  : in STD_LOGIC_VECTOR (2 downto 0);
-            SLTUorSLT   : in STD_LOGIC;
             N_flag      : out STD_LOGIC;
             Z_flag      : out STD_LOGIC;
             C_flag      : out STD_LOGIC;
@@ -54,7 +53,6 @@ architecture Behavioral of ALU_tb is
 
     signal SrcA_tb, SrcB_tb       : STD_LOGIC_VECTOR(N_tb-1 downto 0) := (others => '0');
     signal ALUControl_tb          : STD_LOGIC_VECTOR(2 downto 0) := "000";
-    signal SLTUorSLT_tb           : STD_LOGIC := '0';
     
     signal ALUResult_tb           : STD_LOGIC_VECTOR(N_tb-1 downto 0);
     signal N_tb_flag, Z_tb_flag   : STD_LOGIC;
@@ -67,7 +65,6 @@ begin
             SrcA       => SrcA_tb,
             SrcB       => SrcB_tb,
             ALUControl => ALUControl_tb,
-            SLTUorSLT  => SLTUorSLT_tb,
             N_flag     => N_tb_flag,
             Z_flag     => Z_tb_flag,
             C_flag     => C_tb_flag,

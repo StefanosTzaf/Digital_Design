@@ -50,9 +50,7 @@ architecture Behavioral of ControlUnit_tb is
             ALUSrc     : out std_logic;
             ImmSrc     : out std_logic_vector(1 downto 0);
             RegWrite   : out std_logic;
-            SLTUorSLT  : out std_logic;
-            ALUControl : out std_logic_vector(2 downto 0);
-            PCSrc      : out std_logic
+            ALUControl : out std_logic_vector(2 downto 0)
         );
     end component;
 
@@ -65,9 +63,7 @@ architecture Behavioral of ControlUnit_tb is
     signal ALUSrc_tb     : STD_LOGIC;
     signal ImmSrc_tb     : STD_LOGIC_VECTOR(1 downto 0);
     signal RegWrite_tb   : STD_LOGIC;
-    signal SLTUorSLT_tb  : STD_LOGIC;
     signal ALUControl_tb : STD_LOGIC_VECTOR(2 downto 0);
-    signal PCSrc_tb      : STD_LOGIC;
 
 
 begin
@@ -82,9 +78,7 @@ begin
             ALUSrc     => ALUSrc_tb,
             ImmSrc     => ImmSrc_tb,
             RegWrite   => RegWrite_tb,
-            SLTUorSLT  => SLTUorSLT_tb,
-            ALUControl => ALUControl_tb,
-            PCSrc      => PCSrc_tb
+            ALUControl => ALUControl_tb
         );
 
 

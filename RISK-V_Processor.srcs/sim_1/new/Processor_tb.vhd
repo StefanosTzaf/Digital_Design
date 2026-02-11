@@ -78,7 +78,7 @@ begin
         wait until falling_edge(Clk_tb);
         Reset_tb <= '0';
         -- Wait for some time to observe the outputs
-        wait for 12*CLK_PERIOD;
+        wait for 15*CLK_PERIOD;
         -- End the simulation
         wait;
     end process;

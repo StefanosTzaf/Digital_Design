@@ -36,8 +36,7 @@ entity ALUDec is
         funct3     : in STD_LOGIC_VECTOR(2 downto 0);
         Funct7     : in STD_LOGIC;
         rop        : in STD_LOGIC_VECTOR(2 downto 0);
-        ALUControl : out STD_LOGIC_VECTOR(2 downto 0);
-        SLTUorSLT  : out STD_LOGIC
+        ALUControl : out STD_LOGIC_VECTOR(2 downto 0)
      );
 end ALUDec;
 
@@ -50,13 +49,11 @@ begin
         variable Funct7_v     : STD_LOGIC;
         variable rop_v        : STD_LOGIC_VECTOR(2 downto 0);
         variable ALUControl_v : STD_LOGIC_VECTOR(2 downto 0);
-        variable SLTUorSLT_v  : STD_LOGIC;
     begin
         funct3_v     := funct3;
         Funct7_v     := Funct7;
         rop_v        := rop;
         ALUControl_v := "111"; -- default to an invalid control signal
-        SLTUorSLT_v  := '0';
         
         case rop is
             when "000" => --LW
@@ -99,7 +96,6 @@ begin
         end case;
 
         ALUControl <= ALUControl_v;
-        SLTUorSLT  <= SLTUorSLT_v;
     end Process;
 
                         

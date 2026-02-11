@@ -39,14 +39,12 @@ entity Datapath is
     Port (
         Clk           : in  STD_LOGIC;
         Reset         : in  STD_LOGIC;
-        PCSrc         : in  STD_LOGIC;
         RegWrite      : in  STD_LOGIC;
         ALUSrc        : in  STD_LOGIC;
         MemWrite      : in  STD_LOGIC;
         ResultSrc     : in  STD_LOGIC;
         ALUControl    : in  STD_LOGIC_VECTOR(2 downto 0);
         ImmSrc        : in  STD_LOGIC_VECTOR(1 downto 0);
-        SLTUorSLT     : in  STD_LOGIC;
         
         -- output for Control unit
         NZVC          : out STD_LOGIC_VECTOR(3 downto 0);
@@ -148,7 +146,6 @@ architecture Structural of Datapath is
             SrcA            : in STD_LOGIC_VECTOR (N-1 downto 0);
             SrcB            : in STD_LOGIC_VECTOR (N-1 downto 0);
             ALUControl      : in STD_LOGIC_VECTOR (2 downto 0);
-            SLTUorSLT       : in STD_LOGIC;
     
             N_flag          : out STD_LOGIC;
             Z_flag          : out STD_LOGIC;
@@ -176,7 +173,6 @@ architecture Structural of Datapath is
     
     signal pc_current           : std_logic_vector(N-1 downto 0); -- current value of program counter
     signal pc_plus4             : std_logic_vector(N-1 downto 0); -- pc after addition of 4 component
-    signal pc_next              : std_logic_vector(N-1 downto 0); -- next value of program counter
     signal PC_target            : std_logic_vector(N-1 downto 0); -- target address for branch/jump instructions
     signal Instr                : std_logic_vector(N-1 downto 0); -- output of instruction memory component
     signal rd1, rd2             : std_logic_vector(N-1 downto 0); -- output of register file component
@@ -195,7 +191,7 @@ begin
         port map ( 
             Clk    => Clk, 
             Reset  => Reset, 
-            PC_In  => pc_next,
+            PC_In  => pc_plus4,
             PC_Out => pc_current 
         );
 
@@ -251,7 +247,6 @@ begin
             SrcA       => rd1, 
             SrcB       => SrcB, 
             ALUControl => ALUControl, 
-            SLTUorSLT  => SLTUorSLT,
             N_flag     => N_f, 
             Z_flag     => Z_f, 
             C_flag     => C_f,
@@ -278,22 +273,22 @@ begin
             MuxOut => result
         );
 
-    -- 2.5.2
-    PCAdderBranch_component : Adder_by_4 
-        port map ( 
-            A       => pc_current, 
-            B       => ExtImm, 
-            PCPlus4 => PC_target 
-        );
+    -- 2.5.2 NOT IMPLEMENTED AS ASSIGNMENT SAYS
+--    PCAdderBranch_component : Adder_by_4 
+--        port map ( 
+--            A       => pc_current, 
+--            B       => ExtImm, 
+--            PCPlus4 => PC_target 
+--        );
 
     -- 2.5.3
-    MuxPCSrc_component : Mux2to1 
-        port map ( 
-            In0    => pc_plus4, 
-            In1    => PC_target, 
-            Sel    => PCSrc, 
-            MuxOut => pc_next 
-        );
+--    MuxPCSrc_component : Mux2to1 
+--        port map ( 
+--            In0    => pc_plus4, 
+--            In1    => PC_target, 
+--            Sel    => PCSrc, 
+--            MuxOut => pc_next 
+--        );
         
 
 PC_out        <= pc_current;

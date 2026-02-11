@@ -44,9 +44,7 @@ entity ControlUnit is
         ALUSrc     : out std_logic;
         ImmSrc     : out std_logic_vector(1 downto 0);
         RegWrite   : out std_logic;
-        SLTUorSLT  : out std_logic;
-        ALUControl : out std_logic_vector(2 downto 0);
-        PCSrc      : out std_logic
+        ALUControl : out std_logic_vector(2 downto 0)
      );
 end ControlUnit;
 
@@ -71,8 +69,7 @@ architecture Structural of ControlUnit is
         funct3     : in STD_LOGIC_VECTOR(2 downto 0);
         Funct7     : in STD_LOGIC;
         rop        : in STD_LOGIC_VECTOR(2 downto 0);
-        ALUControl : out STD_LOGIC_VECTOR(2 downto 0);
-        SLTUorSLT  : out STD_LOGIC
+        ALUControl : out STD_LOGIC_VECTOR(2 downto 0)
      );
      end component;
 
@@ -80,8 +77,7 @@ architecture Structural of ControlUnit is
     Port ( 
         funct3 : in STD_LOGIC_VECTOR(2 downto 0);
         rop    : in STD_LOGIC_VECTOR(2 downto 0);
-        NZVC   : in STD_LOGIC_VECTOR(3 downto 0);
-        PCSrc  : out STD_LOGIC
+        NZVC   : in STD_LOGIC_VECTOR(3 downto 0)
     );
     end component;
 
@@ -105,16 +101,14 @@ begin
             funct3 => funct3,
             Funct7 => funct7,
             rop => ALUControl_internal,
-            ALUControl => ALUControl,
-            SLTUorSLT => SLTUorSLT
+            ALUControl => ALUControl
         );
         
     PCLogic_component : PCLogic
         port map(
             funct3 => funct3,
             rop => ALUControl_internal, 
-            NZVC => NZVC,
-            PCSrc => PCSrc
+            NZVC => NZVC
         );
 
     

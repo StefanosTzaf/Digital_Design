@@ -55,14 +55,12 @@ component datapath is
     Port (
         Clk           : in  STD_LOGIC;
         Reset         : in  STD_LOGIC;
-        PCSrc         : in  STD_LOGIC;
         RegWrite      : in  STD_LOGIC;
         ALUSrc        : in  STD_LOGIC;
         MemWrite      : in  STD_LOGIC;
         ResultSrc     : in  STD_LOGIC;
         ALUControl    : in  STD_LOGIC_VECTOR(2 downto 0);
         ImmSrc        : in  STD_LOGIC_VECTOR(1 downto 0);
-        SLTUorSLT     : in  STD_LOGIC;
         
         -- outputs for the control unit
         NZVC           : out  STD_LOGIC_VECTOR(3 downto 0);
@@ -89,21 +87,17 @@ component ControlUnit is
         ALUSrc : out std_logic;
         ImmSrc : out std_logic_vector(1 downto 0);
         RegWrite : out std_logic;
-        SLTUorSLT : out std_logic;
-        ALUControl : out std_logic_vector(2 downto 0);
-        PCSrc : out std_logic
+        ALUControl : out std_logic_vector(2 downto 0)
      );
 end component;
 
 
-signal PCSrc_internal : std_logic;
 signal RegWrite_internal : std_logic;
 signal ALUSrc_internal : std_logic;
 signal MemWrite_internal : std_logic;
 signal ResultSrc_internal : std_logic;
 signal ALUControl_internal : std_logic_vector(2 downto 0);
 signal ImmSrc_internal : std_logic_vector(1 downto 0);
-signal SLTUorSLT_internal : std_logic;
 signal NZVC_internal : std_logic_vector(3 downto 0);
 signal instr_internal : std_logic_vector(N-1 downto 0);
  
@@ -111,16 +105,16 @@ begin
 
     Datapath_component : datapath
         generic map ( N => N )
-        port map ( Clk => Clk, Reset => Reset, PCSrc => PCSrc_internal, RegWrite => RegWrite_internal, ALUSrc => ALUSrc_internal, 
+        port map ( Clk => Clk, Reset => Reset, RegWrite => RegWrite_internal, ALUSrc => ALUSrc_internal, 
                    MemWrite => MemWrite_internal, ResultSrc => ResultSrc_internal, ALUControl => ALUControl_internal,
-                   ImmSrc => ImmSrc_internal, SLTUorSLT => SLTUorSLT_internal, PC_out => PC_out, Instr_out => instr_internal,
+                   ImmSrc => ImmSrc_internal, PC_out => PC_out, Instr_out => instr_internal,
                    ALUResult_out => ALUResult_out, WriteData_out => WriteData_out, Result_out => Result_out, NZVC => NZVC_internal
         );
 
     ControlUnit_component : ControlUnit
         port map(Opcode => instr_internal(6 downto 2), funct3 => instr_internal(14 downto 12), funct7 => instr_internal(30), NZVC => NZVC_internal,
                  ResultSrc => ResultSrc_internal, MemWrite => MemWrite_internal, ALUSrc => ALUSrc_internal, ImmSrc => ImmSrc_internal,
-                 RegWrite => RegWrite_internal, SLTUorSLT => SLTUorSLT_internal, ALUControl => ALUControl_internal, PCSrc => PCSrc_internal
+                 RegWrite => RegWrite_internal, ALUControl => ALUControl_internal
         );
 
     instr_out <= instr_internal;

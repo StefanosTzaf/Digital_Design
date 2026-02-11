@@ -95,6 +95,7 @@ begin
         -- read must have value 10
         ADDR_R1_tb  <= "0001";
         wait for CLK_PERIOD;
+        
         RegWrite_tb <= '0';
         wait for CLK_PERIOD;
         
