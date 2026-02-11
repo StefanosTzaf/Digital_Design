@@ -36,8 +36,6 @@ entity ControlUnit is
         opcode : in std_logic_vector(4 downto 0);
         funct3 : in std_logic_vector(2 downto 0);
         funct7 : in std_logic;
-        NZVC   : in std_logic_vector(3 downto 0);
-
 
         ResultSrc  : out std_logic;
         MemWrite   : out std_logic;
@@ -73,14 +71,6 @@ architecture Structural of ControlUnit is
      );
      end component;
 
-    component PCLogic is
-    Port ( 
-        funct3 : in STD_LOGIC_VECTOR(2 downto 0);
-        rop    : in STD_LOGIC_VECTOR(2 downto 0);
-        NZVC   : in STD_LOGIC_VECTOR(3 downto 0)
-    );
-    end component;
-
      signal ALUControl_internal : STD_LOGIC_VECTOR(2 downto 0);
 
 begin
@@ -103,13 +93,5 @@ begin
             rop => ALUControl_internal,
             ALUControl => ALUControl
         );
-        
-    PCLogic_component : PCLogic
-        port map(
-            funct3 => funct3,
-            rop => ALUControl_internal, 
-            NZVC => NZVC
-        );
-
     
 end Structural;

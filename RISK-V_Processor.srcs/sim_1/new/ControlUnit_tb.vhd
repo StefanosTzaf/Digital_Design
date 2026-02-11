@@ -42,8 +42,6 @@ architecture Behavioral of ControlUnit_tb is
             opcode : in std_logic_vector(4 downto 0);
             funct3 : in std_logic_vector(2 downto 0);
             funct7 : in std_logic;
-            NZVC   : in std_logic_vector(3 downto 0);
-
 
             ResultSrc  : out std_logic;
             MemWrite   : out std_logic;
@@ -57,7 +55,6 @@ architecture Behavioral of ControlUnit_tb is
     signal opcode_tb     : STD_LOGIC_VECTOR(4 downto 0);
     signal funct3_tb     : STD_LOGIC_VECTOR(2 downto 0);
     signal funct7_tb     : STD_LOGIC;
-    signal NZVC_tb       : STD_LOGIC_VECTOR(3 downto 0);
     signal ResultSrc_tb  : STD_LOGIC;
     signal MemWrite_tb   : STD_LOGIC;
     signal ALUSrc_tb     : STD_LOGIC;
@@ -72,7 +69,6 @@ begin
             opcode     => opcode_tb,
             funct3     => funct3_tb,
             funct7     => funct7_tb,
-            NZVC       => NZVC_tb,
             ResultSrc  => ResultSrc_tb,
             MemWrite   => MemWrite_tb,
             ALUSrc     => ALUSrc_tb,
@@ -84,6 +80,75 @@ begin
 
     test_process: process
     begin
+        -- TEST CASE 1: R-Type (Opcode = 01100)
+        -- RegWrite=1, ALUSrc=0, ImmSrc=00, MemWrite=0, ResultSrc=0
 
+        -- ADD (funct3=000, funct7=0) ALUControl 000
+        opcode_tb <= "01100";
+        funct3_tb <= "000";
+        funct7_tb <= '0';
+        wait for 10 ns;
+        
+        -- SUB (funct3=000, funct7=1) ALUControl 001
+        opcode_tb <= "01100"; 
+        funct3_tb <= "000"; 
+        funct7_tb <= '1';
+        wait for 10 ns;
+
+        -- AND (funct3=111) ALUControl 100
+        opcode_tb <= "01100"; 
+        funct3_tb <= "111"; 
+        funct7_tb <= '0';
+        wait for 10 ns;
+
+        -- OR (funct3=110) ALUControl 101
+        opcode_tb <= "01100"; 
+        funct3_tb <= "110"; 
+        funct7_tb <= '0';
+        wait for 10 ns;
+        
+        -- XOR (funct3=100) ALUControl 110
+        opcode_tb <= "01100"; 
+        funct3_tb <= "100"; 
+        funct7_tb <= '0';
+        wait for 10 ns;
+
+
+        -- I-Type Opcode = 00100
+        -- RegWrite=1, ALUSrc=1, ImmSrc=00, MemWrite=0, ResultSrc=0
+        -- ADDI (funct3=000) ALUControl 000
+        opcode_tb <= "00100";
+        funct3_tb <= "000";
+        funct7_tb <= '0';
+        wait for 10 ns;
+
+        -- XORI (funct3=100) ALUControl 110
+        opcode_tb <= "00100"; 
+        funct3_tb <= "100"; 
+        wait for 10 ns;
+
+        -- ORI (funct3=110) ALUControl 101
+        opcode_tb <= "00100"; 
+        funct3_tb <= "110"; 
+        wait for 10 ns;
+
+        -- ANDI (funct3=111) ALUControl 100
+        opcode_tb <= "00100";
+        funct3_tb <= "111";
+        wait for 10 ns;
+
+
+        -- LW (Opcode = 00000)
+        -- ResultSrc=1, ALUSrc=1, RegWrite=1, ALUControl="000" ImmSrc="00" MemWrite=0
+        opcode_tb <= "00000";
+        funct3_tb <= "010";
+        wait for 10 ns;
+
+        -- SW (Opcode = 01000)
+        -- MemWrite=1, ALUSrc=1, ImmSrc="01", RegWrite=0, ALUControl="000" ResultSrc=0
+        opcode_tb <= "01000"; 
+        funct3_tb <= "010"; 
+        wait for 10 ns;
+        wait;
     end process;
 end Behavioral;

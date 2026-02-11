@@ -79,9 +79,7 @@ component ControlUnit is
         opcode : in std_logic_vector(4 downto 0);
         funct3 : in std_logic_vector(2 downto 0);
         funct7 : in std_logic;
-        NZVC : in std_logic_vector(3 downto 0);
-
-
+ 
         ResultSrc : out std_logic;
         MemWrite : out std_logic;
         ALUSrc : out std_logic;
@@ -112,7 +110,7 @@ begin
         );
 
     ControlUnit_component : ControlUnit
-        port map(Opcode => instr_internal(6 downto 2), funct3 => instr_internal(14 downto 12), funct7 => instr_internal(30), NZVC => NZVC_internal,
+        port map(Opcode => instr_internal(6 downto 2), funct3 => instr_internal(14 downto 12), funct7 => instr_internal(30),
                  ResultSrc => ResultSrc_internal, MemWrite => MemWrite_internal, ALUSrc => ALUSrc_internal, ImmSrc => ImmSrc_internal,
                  RegWrite => RegWrite_internal, ALUControl => ALUControl_internal
         );
