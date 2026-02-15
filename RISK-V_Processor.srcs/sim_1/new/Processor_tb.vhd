@@ -42,13 +42,13 @@ architecture Behavioral of Processor_tb is
 
     component Processor is
         Port ( 
-            Clk : in STD_LOGIC;
-            Reset : in STD_LOGIC;
+            Clk           : in STD_LOGIC;
+            Reset         : in STD_LOGIC;
             ALUResult_out : out STD_LOGIC_VECTOR(N_tb-1 downto 0);
             WriteData_out : out STD_LOGIC_VECTOR(N_tb-1 downto 0);
-            Result_out : out STD_LOGIC_VECTOR(N_tb-1 downto 0);
-            PC_out : out STD_LOGIC_VECTOR(N_tb-1 downto 0);
-            Instr_out : out STD_LOGIC_VECTOR(N_tb-1 downto 0)
+            Result_out    : out STD_LOGIC_VECTOR(N_tb-1 downto 0);
+            PC_out        : out STD_LOGIC_VECTOR(N_tb-1 downto 0);
+            Instr_out     : out STD_LOGIC_VECTOR(N_tb-1 downto 0)
         );
     end component;
 
@@ -58,9 +58,14 @@ architecture Behavioral of Processor_tb is
     signal ALUResult_out_tb, WriteData_out_tb, Result_out_tb, PC_out_tb, Instr_out_tb : STD_LOGIC_VECTOR(N_tb-1 downto 0);
 begin
 
-    UUT: Processor port map ( Clk => Clk_tb, Reset => Reset_tb, ALUResult_out => ALUResult_out_tb, 
-                              WriteData_out => WriteData_out_tb, Result_out => Result_out_tb, 
-                              PC_out => PC_out_tb, Instr_out => Instr_out_tb );
+    UUT: Processor port map ( Clk => Clk_tb,
+                              Reset => Reset_tb,
+                              ALUResult_out => ALUResult_out_tb, 
+                              WriteData_out => WriteData_out_tb,
+                              Result_out => Result_out_tb, 
+                              PC_out => PC_out_tb,
+                              Instr_out => Instr_out_tb 
+                             );
         
     clk_process : process
     begin
@@ -75,12 +80,11 @@ begin
         -- Reset the processor
         Reset_tb <= '1';
         wait for 100 ns;
-        wait until falling_edge(Clk_tb);
+        wait until rising_edge(Clk_tb);
         Reset_tb <= '0';
         -- Wait for some time to observe the outputs
-        wait for 15*CLK_PERIOD;
+        wait for 17*CLK_PERIOD;
         -- End the simulation
-        wait;
     end process;
 end Behavioral;
 

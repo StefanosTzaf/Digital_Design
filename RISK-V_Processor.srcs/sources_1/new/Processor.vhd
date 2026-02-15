@@ -103,16 +103,32 @@ begin
 
     Datapath_component : datapath
         generic map ( N => N )
-        port map ( Clk => Clk, Reset => Reset, RegWrite => RegWrite_internal, ALUSrc => ALUSrc_internal, 
-                   MemWrite => MemWrite_internal, ResultSrc => ResultSrc_internal, ALUControl => ALUControl_internal,
-                   ImmSrc => ImmSrc_internal, PC_out => PC_out, Instr_out => instr_internal,
-                   ALUResult_out => ALUResult_out, WriteData_out => WriteData_out, Result_out => Result_out, NZVC => NZVC_internal
+        port map ( Clk => Clk,
+                   Reset => Reset,
+                   RegWrite => RegWrite_internal,
+                   ALUSrc => ALUSrc_internal, 
+                   MemWrite => MemWrite_internal,
+                   ResultSrc => ResultSrc_internal,
+                   ALUControl => ALUControl_internal,
+                   ImmSrc => ImmSrc_internal,
+                   PC_out => PC_out,
+                   Instr_out => instr_internal,
+                   ALUResult_out => ALUResult_out,
+                   WriteData_out => WriteData_out,
+                   Result_out => Result_out,
+                   NZVC => NZVC_internal
         );
 
     ControlUnit_component : ControlUnit
-        port map(Opcode => instr_internal(6 downto 2), funct3 => instr_internal(14 downto 12), funct7 => instr_internal(30),
-                 ResultSrc => ResultSrc_internal, MemWrite => MemWrite_internal, ALUSrc => ALUSrc_internal, ImmSrc => ImmSrc_internal,
-                 RegWrite => RegWrite_internal, ALUControl => ALUControl_internal
+        port map(Opcode => instr_internal(6 downto 2),
+                 funct3 => instr_internal(14 downto 12),
+                 funct7 => instr_internal(30),
+                 ResultSrc => ResultSrc_internal,
+                 MemWrite => MemWrite_internal,
+                 ALUSrc => ALUSrc_internal,
+                 ImmSrc => ImmSrc_internal,
+                 RegWrite => RegWrite_internal,
+                 ALUControl => ALUControl_internal
         );
 
     instr_out <= instr_internal;
